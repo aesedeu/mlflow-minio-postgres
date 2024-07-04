@@ -24,6 +24,6 @@ spec:
         - name: POSTGRES_PASSWORD
           value: postgres
         - name: POSTGRES_DB
-          value: mlflowdb
+          value: postgres
         ports:
         - containerPort: 5432
