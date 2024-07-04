@@ -33,6 +33,10 @@ spec:
         ports:
         - containerPort: 9000
         - containerPort: 9001
+        resources:
+          requests:
+            cpu: 100m
+            memory: 2Gi
         volumeMounts:
         - name: minio-data
           mountPath: /data
