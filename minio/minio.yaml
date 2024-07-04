@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      # nodeSelector: # choose a particular node if needs
+      #   kubernetes.io/hostname: <NODE_NAME>
+      containers:
+      - name: minio
+        image: quay.io/minio/minio:latest
+        args: ["server", "/data", "--console-address", ":9001", "--address", ":9000"]
+        env:
+        - name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: minio-root-user
+        - name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: minio-root-password
+        ports:
+        - containerPort: 9000
+        - containerPort: 9001
+        volumeMounts:
+        - name: minio-data
+          mountPath: /data
+      volumes:
+      - name: minio-data
+        persistentVolumeClaim:
+          claimName: minio-pvc
+      # - name: local-volume # for local storage
+      #   hostPath:
+      #     path: /mnt/disk1/data
+      #     type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+spec:
+  selector:
+    app: minio
+  type: NodePort # ОБЯЗАТЕЛЬНО указать чтобы не было проблем с прокси
+  ports:
+  - name: http
+    port: 9000
+    targetPort: 9000
+  - name: console
+    port: 9001
+    targetPort: 9001
+    nodePort: 32090
