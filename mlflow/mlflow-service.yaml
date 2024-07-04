@@ -7,5 +7,5 @@ spec:
   selector:
     app: mlflow
   ports:
-  - port: 5050
+  - port: 5000
     targetPort: 5000
