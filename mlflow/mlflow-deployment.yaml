@@ -20,7 +20,7 @@ spec:
         image: aesedeu/aes-mlflow
         command: ["bash", "-c"]
         args:
-          - mlflow server --backend-store-uri postgresql://postgres:postgres@postgres:5432/mlflowdb --default-artifact-root s3://default/ --host 0.0.0.0 --app-name basic-auth
+          - mlflow server --backend-store-uri postgresql://postgres:postgres@postgres:5432/mlflowdb --default-artifact-root s3://default/ --host 0.0.0.0 --port 5000 --app-name basic-auth
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
