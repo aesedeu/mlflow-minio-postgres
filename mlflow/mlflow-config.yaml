@@ -5,6 +5,8 @@ metadata:
   namespace: test
 data:
   basic_auth.ini: |
-    [auth]
-    username = user
-    password = password
+    [mlflow]
+    database_uri = postgresql://postgres:postgres@postgres:5432/mlflowdb
+    default_permission = NO_PERMISSIONS
+    admin_username = admin
+    admin_password = password
