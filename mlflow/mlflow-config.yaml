@@ -6,7 +6,7 @@ metadata:
 data:
   basic_auth.ini: |
     [mlflow]
-    database_uri = postgresql://postgres:postgres@postgres:5432/mlflowdb
+    database_uri = postgresql://postgres:postgres@postgres:5432/posgtres
     default_permission = NO_PERMISSIONS
     admin_username = admin
     admin_password = password
