@@ -3,11 +3,13 @@ kind: PersistentVolume
 metadata:
   name: minio-pv
   namespace: test
+  labels:
+    type: vol1
 spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: /mnt/data/minio
 
@@ -19,7 +21,10 @@ metadata:
   namespace: test
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
+  selector:
+    matchLabels:
+      type: vol1
   resources:
     requests:
       storage: 10Gi
