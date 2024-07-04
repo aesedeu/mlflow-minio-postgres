@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: your-node-name
+      containers:
+      - name: mlflow
+        image: aesedeu/aes-mlflow
+        command: ["bash", "-c"]
+        args:
+          - mlflow server --backend-store-uri postgresql://postgres:postgres@postgres:5432/mlflowdb --default-artifact-root s3://default/ --host 0.0.0.0 --app-name basic-auth
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: minio-root-user
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secret
+              key: minio-root-password
+        - name: MLFLOW_S3_ENDPOINT_URL
+          value: http://minio:9000
+        - name: MLFLOW_AUTH_CONFIG_PATH
+          value: /basic_auth.ini
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: auth-config
+          mountPath: /basic_auth.ini
+          subPath: basic_auth.ini
+      volumes:
+      - name: auth-config
+        configMap:
+          name: mlflow-auth-config
