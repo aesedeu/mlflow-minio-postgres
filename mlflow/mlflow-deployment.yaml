@@ -13,8 +13,8 @@ spec:
       labels:
         app: mlflow
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: your-node-name
+      # nodeSelector:
+      #   kubernetes.io/hostname: your-node-name
       containers:
       - name: mlflow
         image: aesedeu/aes-mlflow
