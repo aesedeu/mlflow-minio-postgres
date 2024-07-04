@@ -39,10 +39,10 @@ spec:
         ports:
         - containerPort: 5000
         volumeMounts:
-        - name: auth-config
-          mountPath: /basic_auth.ini
+        - name: mlflow-auth-config
+          mountPath: ./basic_auth.ini
           subPath: basic_auth.ini
       volumes:
-      - name: auth-config
+      - name: mlflow-auth-config
         configMap:
           name: mlflow-auth-config
