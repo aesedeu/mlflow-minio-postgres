@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: file:////Users/aweeu/Desktop/mlops_cicd/mlflow+minio+postgres
+    repoURL: https://github.com/aesedeu/mlflow-minio-postgres.git
     targetRevision: HEAD
     path: minio
   destination: 

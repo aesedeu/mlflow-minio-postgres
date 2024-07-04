@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: minio
-  namespace: default
+  namespace: test
 spec:
   replicas: 1
   selector:
@@ -45,20 +45,4 @@ spec:
       #     path: /mnt/disk1/data
       #     type: DirectoryOrCreate
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: minio
-spec:
-  selector:
-    app: minio
-  type: NodePort # ОБЯЗАТЕЛЬНО указать чтобы не было проблем с прокси
-  ports:
-  - name: http
-    port: 9000
-    targetPort: 9000
-  - name: console
-    port: 9001
-    targetPort: 9001
-    nodePort: 32090
+
