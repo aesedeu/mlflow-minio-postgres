@@ -21,7 +21,7 @@ spec:
         pullPolicy: IfNotPresent
         command: ["bash", "-c"]
         args:
-          - mlflow server --backend-store-uri postgresql://postgres:postgres@postgres:5432/postgres --default-artifact-root s3://default/ --host=0.0.0.0 --port=5000 --app-name basic-auth
+          - mlflow server --backend-store-uri=postgresql://postgres:postgres@postgres:5432/postgres --default-artifact-root=s3://default/ --host=0.0.0.0 --port=5000 --app-name=basic-auth --gunicorn-opts "--worker-class gevent --threads 3 --workers 3 --timeout 300 --keep-alive 300 --log-level INFO"
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
