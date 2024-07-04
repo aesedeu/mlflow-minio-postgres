@@ -33,7 +33,7 @@ spec:
   source:
     repoURL: https://github.com/aesedeu/mlflow-minio-postgres.git
     targetRevision: HEAD
-    path: minio
+    path: mlflow
   destination: 
     server: https://kubernetes.default.svc
     namespace: test
